@@ -36,7 +36,7 @@
     	<key>Processor</key>
     	<string>Unarchiver</string>
     	<key>arguments</key>
-    	<dict>
+    		<dict>
     		<key>archive_format</key>
         	<string>zip</string>
         	<key>archive_path</key>
@@ -46,17 +46,17 @@
         	<key>purge_destination</key>
         	<true/>
 		</dict>
-	</dict>
-	<dict>
+    </dict>
+    <dict>
         <key>Processor</key>
         <string>DmgCreator</string>
         <key>arguments</key>
-        <dict>
+        	<dict>
         	<key>dmg_root</key>
-        	<string>%RECIPE_CACHE_DIR%/%NAME%</string>
-			<key>dmg_path</key>
+		<string>%RECIPE_CACHE_DIR%/%NAME%</string>
+		<key>dmg_path</key>
         	<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
-        </dict>
+        	</dict>
     </dict>
     <dict>
            <key>Processor</key>
