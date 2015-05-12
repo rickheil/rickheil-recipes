@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest version of Tower.</string>
     <key>Identifier</key>
-    <string>com.partnersandsimons.autopkg.download.Tower</string>
+    <string>com.github.rickheil.psautopkg.download.Tower</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
