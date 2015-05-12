@@ -31,7 +31,7 @@
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.autopkg.download.Tower</string>
+    <string>com.github.rickheil.psautopkg.download.Tower</string>
     <key>Process</key>
     <array>
         <dict>
