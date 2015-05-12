@@ -32,7 +32,7 @@
     <string>com.github.rickheil.psautopkg.download.Tower</string>
     <key>Process</key>
     <array>
-    <dict>
+<!--    <dict>
     	<key>Processor</key>
     	<string>Unarchiver</string>
     	<key>arguments</key>
@@ -46,7 +46,7 @@
         	<key>purge_destination</key>
         	<true/>
 		</dict>
-    </dict>
+    </dict>-->
     <dict>
         <key>Processor</key>
         <string>DmgCreator</string>
