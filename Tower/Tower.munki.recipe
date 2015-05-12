@@ -22,8 +22,6 @@
             <string>Git Tower is a powerful Git client for Mac users who want to access their repositories using an easy-to-use and intuitive graphical interface.</string>
             <key>display_name</key>
             <string>Tower</string>
-            <key>name</key>
-            <string>Tower</string>
             <key>unattended_install</key>
             <true/>
         </dict>
