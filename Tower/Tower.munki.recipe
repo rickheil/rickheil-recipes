@@ -23,7 +23,7 @@
             <key>display_name</key>
             <string>Tower</string>
             <key>name</key>
-            <string>%NAME%</string>
+            <string>Tower</string>
             <key>unattended_install</key>
             <true/>
         </dict>
