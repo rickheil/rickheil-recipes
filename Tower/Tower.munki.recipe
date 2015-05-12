@@ -46,7 +46,8 @@
         		<key>purge_destination</key>
         		<true/>
         	</dict>
-        	
+        </dict>
+        <dict>
         	<key>Processor</key>
         	<string>DmgCreator</string>
         	<key>arguments</key>
