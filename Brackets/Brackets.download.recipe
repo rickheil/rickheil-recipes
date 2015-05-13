@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of Tower.</string>
+    <string>Downloads latest version of Brackets.</string>
     <key>Identifier</key>
-    <string>com.github.rickheil.psautopkg.download.Tower</string>
+    <string>com.github.rickheil.psautopkg.download.Brackets</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>Tower</string>
+        <string>Brackets</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
