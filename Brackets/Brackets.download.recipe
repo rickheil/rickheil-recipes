@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>asset_regex</key>
-                <string>^Brackets.Release*?dmg$</string>
+                <string>^Brackets.Release.*?dmg$</string>
                 <key>github_repo</key>
                 <string>adobe/brackets</string>
             </dict>
