@@ -29,6 +29,11 @@
         <dict>
             <key>Processor</key>
             <string>URLDownloader</string>
+                <dict>
+                <key>filename</key>
+                <string>%NAME%.dmg</string>
+            </dict>
+
         </dict>
         <dict>
             <key>Processor</key>
