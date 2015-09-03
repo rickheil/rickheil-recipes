@@ -21,7 +21,7 @@
 				<key>url</key>
 				<string>https://github.com/Graylog2/collector</string>
 				<key>re_pattern</key>
-				<string>(https://packages.graylog2.org/releases/graylog-collector/graylog-collector-[0-9\.]+.tgz)</string>
+				<string>(https://packages.graylog2.org/releases/graylog-collector/graylog-collector-[0-9\.]+.zip)</string>
 			</dict>
 			<key>Processor</key>
 			<string>CURLTextSearcher</string>
