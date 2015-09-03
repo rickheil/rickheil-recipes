@@ -35,19 +35,6 @@
         <dict>
             <key>Arguments</key>
             <dict>
-                <key>archive_path</key>
-                <string>%RECIPE_CACHE_DIR%/downloads/%NAME%.tgz</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/%NAME%</string>
-                <key>purge_destination</key>
-                <true/>
-            </dict>
-            <key>Processor</key>
-            <string>Unarchiver</string>
-        </dict>
-        <dict>
-            <key>Arguments</key>
-            <dict>
                 <key>dmg_root</key>
                 <string>%RECIPE_CACHE_DIR%/%NAME%</string>
                 <key>dmg_path</key>
@@ -63,6 +50,10 @@
                 <string>%dmg_path%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
+                <key>additional_makepkginfo_options</key>
+                <dict>
+                	<key>destinationpath</key>
+                <key>
             </dict>
             <key>Processor</key>
             <string>MunkiImporter</string>
