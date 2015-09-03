@@ -9,7 +9,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>graylog2-collector</string>
+        <string>graylog-collector</string>
         <key>MUNKI_REPO_SUBDIR</key>
         <string>apps</string>
         <key>pkginfo</key>
@@ -21,7 +21,7 @@
             <key>description</key>
             <string>The Graylog collector is a lightweight Java application that allows you to forward data from log files to a Graylog cluster. The collector can read local log files and also Windows Events natively, it then can forward the log messages over the network GELF format.</string>
             <key>display_name</key>
-            <string>graylog2-collector</string>
+            <string>Graylog Collector</string>
             <key>unattended_install</key>
             <true/>
         </dict>
