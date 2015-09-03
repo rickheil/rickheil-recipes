@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string>Downloads latest version of the graylog2-collector and imports into a Munki repo.</string>
+    <string>Downloads latest version of the graylog collector and imports into a Munki repo.</string>
     <key>Identifier</key>
-    <string>com.github.rickheil.psautopkg.munki.graylog2-collector</string>
+    <string>com.github.rickheil.psautopkg.munki.graylog-collector</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -29,7 +29,7 @@
     <key>MinimumVersion</key>
     <string>0.2.0</string>
     <key>ParentRecipe</key>
-    <string>com.github.rickheil.psautopkg.download.graylog2-collector</string>
+    <string>com.github.rickheil.psautopkg.download.graylog-collector</string>
     <key>Process</key>
         <array>
         <dict>
