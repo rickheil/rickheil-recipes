@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads latest version of of FitBit Connect  and imports into a Munki repo.</string>
+    <key>Identifier</key>
+    <string>com.github.rickheil.psautopkg.munki.FitBitConnect</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>FitBit Connect</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Stay motivated and tracked with FitBit - improve your health by tracking your activity, exercise, food, weight, and sleep. The FitBit Connect app helps you sync your progress to FitBit.com.</string>
+            <key>display_name</key>
+            <string>FitBit Connect</string>
+            <key>unattended_install</key>
+            <true/>
+        </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.rickheil.psautopkg.download.FitBitConnect</string>
+    <key>Process</key>
+    <array>
+    	<dict>
+        	<key>Processor</key>
+        	<string>DmgCreator</string>
+        	<key>Arguments</key>
+        		<dict>
+        		<key>dmg_root</key>
+        		<string>%RECIPE_CACHE_DIR%/%NAME%</string>
+        		<key>dmg_path</key>
+        		<string>%RECIPE_CACHE_DIR%/%NAME%.dmg</string>
+        		</dict>
+    	</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%dmg_path%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
