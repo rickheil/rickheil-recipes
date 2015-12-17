@@ -9,7 +9,7 @@
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>Fitbit Connect</string>
+		<string>Fitbit-Connect</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>0.2.5</string>
