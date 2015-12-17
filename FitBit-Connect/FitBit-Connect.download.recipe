@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>Downloads the latest version of the FitBit Connect app for use in autopkg.</string>
 	<key>Identifier</key>
-	<string>com.github.rickheil.psautopkg.munki.FitBitConnect</string>
+	<string>com.github.rickheil.psautopkg.download.FitBitConnect</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
