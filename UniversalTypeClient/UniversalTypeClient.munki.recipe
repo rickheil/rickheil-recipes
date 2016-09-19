@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>Description</key>
-    <string></string>
+    <string>Imports the latest version of Universal Type Client to a munki repo.</string>
     <key>Identifier</key>
-    <string></string>
+    <string>com.github.rickheil.psautopkg.munki.UniversalTypeClient</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -29,34 +29,36 @@
         </dict>
     </dict>
     <key>ParentRecipe</key>
-    <string>com.github.rickheil.psautopkg.download.UniversalTypeClient</string>
+    <string>com.github.rickheil.psautopkg.pkg.UniversalTypeClient</string>
     <key>MinimumVersion</key>
     <string>0.2.9</string>
     <key>Process</key>
     <array>
         <dict>
             <key>Processor</key>
-            <string>Unarchiver</string>
+            <string>URLTextSearcher</string>
             <key>Arguments</key>
             <dict>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%</string>
+                <key>url</key>
+                <string>file://%found_filename%</string>
+                <key>re_pattern</key>
+                <string>[0-9.]{5}</string>
             </dict>
         </dict>
         <dict>
             <key>Processor</key>
-            <string>FileFinder</string>
+            <string>MunkiInstallsItemsCreator</string>
             <key>Arguments</key>
             <dict>
-                <key>pattern</key>
-                <string>%RECIPE_CACHE_DIR%/Universal*.pkg</string>
+                <key>installs_item_paths</key>
+                <string>%found_filename%</string>
             </dict>
-        </dict>
+        </dict> 
         <dict>
             <key>Arguments</key>
             <dict>
                 <key>pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/%found_filename%</string>
+                <string>%found_filename%</string>
                 <key>repo_subdirectory</key>
                 <string>%MUNKI_REPO_SUBDIR%</string>
             </dict>

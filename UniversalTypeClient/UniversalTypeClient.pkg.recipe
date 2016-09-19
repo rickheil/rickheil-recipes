@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Packages the latest version of Universal Type Client.</string>
+    <key>Identifier</key>
+    <string>com.github.rickheil.psautopkg.pkg.UniversalTypeClient</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Universal Type Client</string>
+    </dict>
+    
+    <key>ParentRecipe</key>
+    <string>com.github.rickheil.psautopkg.download.UniversalTypeClient</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/Universal*.pkg</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
