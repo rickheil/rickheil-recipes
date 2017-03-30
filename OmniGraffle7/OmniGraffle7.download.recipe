@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest OmniGraffle 7 disk image.</string>
     <key>Identifier</key>
-    <string>com.github.rickheil.psautopkg.download.omnigraffle6</string>
+    <string>com.github.rickheil.psautopkg.download.omnigraffle7</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
@@ -25,7 +25,7 @@
                 <key>input_path</key>
                 <string>%pathname%/OmniGraffle.app</string>
                 <key>requirement</key>
-                <string>certificate leaf = H"26fe998f5ff3bad1beeac952a233231d4e5ad523" and identifier "com.omnigroup.OmniGraffle7"</string>
+                <string>identifier "com.omnigroup.OmniGraffle7" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "34YW5XSRB7"</string>
             </dict>
         </dict>
     </array>
