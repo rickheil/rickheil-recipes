@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Imports the latest version of MeisterTask to a munki repo.</string>
+    <key>Identifier</key>
+    <string>com.github.rickheil.psautopkg.munki.MeisterTask</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>MeisterTask</string>
+        <key>MUNKI_REPO_SUBDIR</key>
+        <string>apps</string>
+        <key>pkginfo</key>
+        <dict>
+            <key>catalogs</key>
+            <array>
+                <string>testing</string>
+            </array>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>description</key>
+            <string>Create a project, add as many team members as you want, assign tasks and follow each other’s progress. MeisterTask’s flexible project boards adapt to your workflow and make sure everyone is always on the same page. Task management has never been more intuitive.</string>
+            <key>display_name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>developer</key>
+            <string>MeisterLabs</string>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.pkg.MeisterTask</string>
+    <key>MinimumVersion</key>
+    <string>0.2.9</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiInstallsItemsCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>installs_item_paths</key>
+                <string>%pathname%</string>
+            </dict>
+        </dict> 
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%pathname%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+        </dict>
+    </array>
+</dict>
+</plist>
