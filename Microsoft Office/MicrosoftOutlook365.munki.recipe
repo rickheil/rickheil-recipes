@@ -22,6 +22,12 @@
             <string>&lt;html&gt;&lt;p style=&quot;font-family:Helvetica;font-size:12px&quot;&gt;For detailed information about this update, please visit the following Web site: &lt;/p&gt;
 
 &lt;p style=&quot;font-family:Helvetica;font-size:12px&quot;&gt;&lt;a href=&quot;https://go.microsoft.com/fwlink/?LinkID=831049&quot; target=&quot;_blank&quot;&gt;https://go.microsoft.com/fwlink/?LinkID=831049&lt;/a&gt;&lt;/p&gt;&lt;/html&gt;</string>
+            <key>blocking_applications</key>
+            <array>
+                <string>Microsoft Outlook</string>
+                <string>Microsoft Error Reporting</string>
+                <string>Microsoft Auto Update</string>
+            </array>
             <key>display_name</key>
             <string>Microsoft Outlook 365 for Mac</string>
             <key>unattended_install</key>
