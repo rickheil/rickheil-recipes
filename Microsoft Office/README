@@ -1,0 +1,2 @@
+Note: these recipes work off Rich Trouton's Office 365 download recipes. You should use these if you want individual products instead of the one SKU-less package.
+If you used the AutoPkg repo's recpies before and your old naming scheme was MS<app name>2016 (e.g. MSWord2016), you can use an override to mark these packages as update_for in the pkginfo in order to get the continuity re-established with the new naming scheme Rich picked.
