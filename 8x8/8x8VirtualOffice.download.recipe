@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads 8x8 Virtual Office Desktop application for Mac.</string>
+    <key>Identifier</key>
+    <string>com.github.rickheilps.download.8x8VirtualOffice</string>
+    <key>MinimumVersion</key>
+    <string>0.2.3</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>re_pattern</key>
+                <string></string>
+                <key>url</key>
+                <string>https://support.8x8.com/us/Cloud_Phone_Service/Voice/Virtual_Office_Desktop/Download_Virtual_Office_Desktop</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
