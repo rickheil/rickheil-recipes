@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads 8x8 Virtual Office Desktop application for Mac.</string>
     <key>Identifier</key>
-    <string>com.github.rickheilps.download.8x8VirtualOffice</string>
+    <string>com.github.rickheil.psautopkg.download.8x8VirtualOffice</string>
     <key>MinimumVersion</key>
     <string>0.2.3</string>
     <key>Process</key>
