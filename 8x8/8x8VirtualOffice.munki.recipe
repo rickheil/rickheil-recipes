@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Imports the latest version of 8x8 Virtual Office Desktop into munki</string>
+	<key>Identifier</key>
+	<string>com.github.rickheil.psautopkg.munki.8x8VirtualOffice</string>
+	<key>ParentRecipe</key>
+	<string>com.github.rickheil.psautopkg.download.8x8VirtualOffice</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>8x8 - Virtual Office</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+			<string>TODO</string>
+			<key>display_name</key>
+			<string>8x8 - Virtual Office</string>
+			<key>developer</key>
+			<string>8x8</string>
+			<key>name</key>
+			<string>%NAME%</string>
+		 	<key>unattended_install</key>
+			<true/>
+		</dict>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>FileFinder</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pattern</key>
+				<string>%RECIPE_CACHE_DIR%/*.pkg</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+			<key>Arguments</key>
+			<dict>
+				<key>flat_pkg_path</key>
+				<string>%found_filename%</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack-dist</string>
+			</dict>
+		</dict>
+        <dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack-dist/uc.pkg</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack-pkg</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack-dist/uc.pkg/Payload</string>
+                <key>extract_root</key>
+                <string>%RECIPE_CACHE_DIR%/unpack-app</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Versioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>input_plist_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack-app/%NAME%.app/Contents/Info.plist</string>
+                <key>plist_version_key</key>
+                <string>CFBundleShortVersionString</string>
+            </dict>
+        </dict>
+	</array>
+	</dict>
+</dict>
+</plist>
