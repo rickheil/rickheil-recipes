@@ -6,12 +6,10 @@
 	<string>Imports the latest version of 8x8 Virtual Office Desktop into munki</string>
 	<key>Identifier</key>
 	<string>com.github.rickheil.psautopkg.munki.8x8VirtualOffice</string>
-	<key>ParentRecipe</key>
-	<string>com.github.rickheil.psautopkg.download.8x8VirtualOffice</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>8x8 - Virtual Office</string>
+		<string>8x8 Virtual Office Desktop</string>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps</string>
 		<key>pkginfo</key>
@@ -21,72 +19,80 @@
 				<string>testing</string>
 			</array>
 			<key>description</key>
-			<string>TODO</string>
+			<string>Virtual Office Desktop is a comprehensive unified communications application that integrates a business softphone with visual voicemail, corporate directory, instant messaging, presence, video calling, fax, call recording, web conferencing, and social media.</string>
 			<key>display_name</key>
-			<string>8x8 - Virtual Office</string>
+			<string>8x8 Virtual Office</string>
 			<key>developer</key>
 			<string>8x8</string>
 			<key>name</key>
 			<string>%NAME%</string>
 		 	<key>unattended_install</key>
 			<true/>
+			<key>blocking_applications</key>
+			<array>
+				<string>8x8 - Virtual Office</string>
+			</array>
 		</dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rickheil.psautopkg.download.8x8VirtualOffice</string>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
 	<key>Process</key>
 	<array>
 		<dict>
-			<key>Processor</key>
-			<string>FileFinder</string>
-			<key>Arguments</key>
-			<dict>
-				<key>pattern</key>
-				<string>%RECIPE_CACHE_DIR%/*.pkg</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
 			<key>Arguments</key>
 			<dict>
 				<key>flat_pkg_path</key>
-				<string>%found_filename%</string>
+				<string>%pathname%</string>
 				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack-dist</string>
+				<string>%RECIPE_CACHE_DIR%/unpack</string>
 			</dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
 		</dict>
-        <dict>
-            <key>Processor</key>
-            <string>FlatPkgUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>flat_pkg_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack-dist/uc.pkg</string>
-                <key>destination_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack-pkg</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>PkgPayloadUnpacker</string>
-            <key>Arguments</key>
-            <dict>
-                <key>pkg_payload_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack-dist/uc.pkg/Payload</string>
-                <key>extract_root</key>
-                <string>%RECIPE_CACHE_DIR%/unpack-app</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>Processor</key>
-            <string>Versioner</string>
-            <key>Arguments</key>
-            <dict>
-                <key>input_plist_path</key>
-                <string>%RECIPE_CACHE_DIR%/unpack-app/%NAME%.app/Contents/Info.plist</string>
-                <key>plist_version_key</key>
-                <string>CFBundleShortVersionString</string>
-            </dict>
-        </dict>
+        	<dict>
+            		<key>Arguments</key>
+            		<dict>
+                		<key>pkg_payload_path</key>
+                		<string>%RECIPE_CACHE_DIR%/unpack/uc.pkg/Payload</string>
+                		<key>destination_path</key>
+                		<string>%RECIPE_CACHE_DIR%/payload</string>
+            		</dict>
+        		<key>Processor</key>
+            		<string>PkgPayloadUnpacker</string>
+        	</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%RECIPE_CACHE_DIR%/payload/Applications/8x8 - Virtual Office.app/Contents/Info.plist</string>
+			</dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>dmg_root</key>
+				<string>%RECIPE_CACHE_DIR%/payload/Applications</string>
+				<key>dmg_path</key>
+				<string>%RECIPE_CACHE_DIR%/8x8VirtualOfficeDesktop_%version%.dmg</string>
+			</dict>
+			<key>Processor</key>
+			<string>DmgCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%RECIPE_CACHE_DIR%/8x8VirtualOfficeDesktop_%version%.dmg</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
 	</array>
-	</dict>
 </dict>
 </plist>
