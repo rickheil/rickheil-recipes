@@ -9,7 +9,7 @@
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>8x8 Virtual Office Desktop</string>
+		<string>8x8VirtualOfficeDesktop</string>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps</string>
 		<key>pkginfo</key>

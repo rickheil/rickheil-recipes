@@ -11,7 +11,7 @@
     <key>Input</key>
     <dict>
         <key>NAME</key>
-        <string>8x8 Virtual Office Desktop</string>
+        <string>8x8VirtualOfficeDesktop</string>
     </dict>
     <key>Process</key>
     <array>
