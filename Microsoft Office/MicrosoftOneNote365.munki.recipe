@@ -5,7 +5,7 @@
     <key>Description</key>
     <string>Downloads latest version of Microsoft OneNote and imports into a Munki repo.</string>
     <key>Identifier</key>
-    <string>com.github.rickheil.psautopkg.munki.MicrosoftExce365</string>
+    <string>com.github.rickheil.psautopkg.munki.MicrosoftOneNote365</string>
     <key>Input</key>
     <dict>
         <key>NAME</key>
