@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the Workfront Proof application for Mac. This version is for the Production environment - if you are on preview environment, override the download link to the one provided to you by support.</string>
+	<key>Identifier</key>
+	<string>com.github.rickheil.psautopkg.munki.WorkfrontProof</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>WorkfrontProof</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>description</key>
+            <string>Use the Desktop Proofing Viewer to proof interactive, static, and video content - right from your Mac.</string>
+			<key>display_name</key>
+			<string>Workfront Proof</string>
+			<key>developer</key>
+			<string>Workfront</string>
+			<key>name</key>
+			<string>%NAME%</string>
+		 	<key>unattended_install</key>
+			<true/>
+			<key>blocking_applications</key>
+			<array>
+				<string>Workfront Proof</string>
+			</array>
+			<key>minimum_os_version</key>
+			<string>10.9</string>
+		</dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rickheil.psautopkg.download.WorkfrontProof</string>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>flat_pkg_path</key>
+				<string>%pathname%</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack</string>
+			</dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Scripts/payload.zip</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/payload/</string>
+            </dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+        </dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%RECIPE_CACHE_DIR%/payload/Workfront Proof.app/Contents/Info.plist</string>
+			</dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>dmg_root</key>
+				<string>%RECIPE_CACHE_DIR%/payload/</string>
+				<key>dmg_path</key>
+				<string>%RECIPE_CACHE_DIR%/WorkfrontProof_%version%.dmg</string>
+			</dict>
+			<key>Processor</key>
+			<string>DmgCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%RECIPE_CACHE_DIR%/WorkfrontProof_%version%.dmg</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
+</dict>
+</plist>
