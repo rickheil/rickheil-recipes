@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Downloads the Workfront Proof application for Mac. This version is for the Production environment - if you are on preview environment, override the download link to the one provided to you by support.</string>
+    <key>Identifier</key>
+    <string>com.github.rickheil.psautopkg.download.WorkfrontProof</string>
+    <key>MinimumVersion</key>
+    <string>0.2.3</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>WorkfrontProof</string>
+    </dict>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>https://cdn.proofhq.com/nativeviewer/desktop_viewer/Workfront+Proof.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+    </array>
+</dict>
+</plist>
