@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Description</key>
+        <string>Imports the latest version of Extensis Universal Type Client 7 into munki.</string>
+        <key>Identifier</key>
+        <string>com.github.rickheil.psautopkg.munki.UniversalTypeClient7</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>UniversalTypeClient7</string>
+            <key>MUNKI_REPO_SUBDIR</key>
+            <string>apps</string>
+            <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>testing</string>
+                </array>
+                <key>description</key>
+                <string>Managing your fonts with Universal Type Server fuels your team’s creativity and productivity.
+
+Store all of your fonts in a centralized, server-based font manager to ensure consistent, worry-free font usage across all of your projects.</string>
+                <key>developer</key>
+                <string>Extensis</string>
+                <key>name</key>
+                <string>%NAME%</string>
+                <key>display_name</key>
+                <string>Universal Type Client</string>
+                <key>unattended_install</key>
+                <true/>
+                <key>blocking_applications</key>
+                <array>
+                    <string>Adobe Photoshop</string>
+                    <string>Adobe Illustrator</string>
+                    <string>Adobe InDesign</string>
+                    <string>Universal Type Client</string>
+                    <string>QuarkXPress</string>
+                </array>
+                <key>minimum_os_version</key>
+                <string>10.11</string>
+            </dict>
+        </dict>
+        <key>ParentRecipe</key>
+        <string>com.github.rickheil.psautopkg.download.UniversalTypeClient7</string>
+        <key>MinimumVersion</key>
+        <string>0.5.0</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>Unarchiver</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>pattern</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%/*.pkg</string>
+                </dict>
+                <key>Processor</key>
+                <string>FileFinder</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>flat_pkg_path</key>
+                    <string>%found_filename%</string>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </dict>
+                <key>Processor</key>
+                <string>FlatPkgUnpacker</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/downloads/payload</string>
+                    <key>pkg_payload_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/universalTypeClient.pkg/Payload</string>
+                </dict>
+                <key>Processor</key>
+                <string>PkgPayloadUnpacker</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>input_plist_path</key>
+                    <string>%RECIPE_CACHE_DIR%/downloads/payload/Universal Type Client.app/Contents/Info.plist</string>
+                </dict>
+                <key>Processor</key>
+                <string>Versioner</string>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>EndOfCheckPhase</string>
+            </dict>
+            <dict>
+                 <key>Processor</key>
+                 <string>CodeSignatureVerifier</string>
+                 <key>Arguments</key>
+                 <dict>
+                    <key>input_path</key>
+                    <string>%RECIPE_CACHE_DIR%/downloads/payload/Universal Type Client.app</string>
+                    <key>requirement</key>
+                    <string>identifier "com.extensis.UniversalTypeClient" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = J6MMHGD9D6</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>path_list</key>
+                    <array>
+                        <string>%RECIPE_CACHE_DIR%/unpack/info.pkg/Scripts/postinstall</string>
+                        <string>%RECIPE_CACHE_DIR%/unpack/universalTypeClient.pkg/Scripts/preinstall</string>
+                        <string>%RECIPE_CACHE_DIR%/unpack/universalTypeClient.pkg/Scripts/postinstall</string>
+                    </array>
+                </dict>
+                <key>Processor</key>
+                <string>PathDeleter</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>file_content</key>
+                    <string>#!/bin/bash
+set -x
+
+# install the UTC plugins
+"/Applications/Universal Type Client.app/Contents/MacOS/Universal Type Client" --HeadlessInstallTriggeredFromInstaller YES > /dev/null 2>&amp;1</string>
+                    <key>file_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/info.pkg/Scripts/postinstall</string>
+                </dict>
+                <key>Processor</key>
+                <string>FileCreator</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>file_content</key>
+                    <string>#!/bin/bash
+set -x 
+
+# shut down FMCore if running
+if [ -n "$(ps -ax | grep "FMCore" | grep -v "grep" | awk ' { print $1 } ')" ]; then
+    if [ -f "/usr/local/bin/corecli" ]; then
+        /usr/local/bin/corecli -clientserver -shutdown
+    elif [ -f "/usr/bin/corecli" ]; then
+        /usr/bin/corecli -clientserver -shutdown
+    else
+        # use the application version to shut down
+        "/Applications/Universal Type Client.app/Contents/Resources/corecli" -clientserver -shutdown > /dev/null 2>&amp;1
+    fi
+fi</string>
+                    <key>file_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/universalTypeClient.pkg/Scripts/preinstall</string>
+                </dict>
+                <key>Processor</key>
+                <string>FileCreator</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>file_content</key>
+                    <string>#!/bin/bash
+set -x 
+
+# create Extensis and UTC directories if they don't already exist
+if [ ! -d "/Library/Extensis" ]; then
+	mkdir "/Library/Extensis"	
+fi
+chmod +a "everyone allow add_file,add_subdirectory,delete_child,directory_inherit" "/Library/Extensis"
+if [ ! -d "/Library/Extensis/UTC" ]; then
+	mkdir "/Library/Extensis/UTC"	
+fi
+chmod +a "everyone allow add_file,add_subdirectory,delete_child,directory_inherit" "/Library/Extensis/UTC"
+
+# install the plugins with current user
+if [ -e "$2/Universal Type Client.app/Contents/MacOS/Universal type Client" ]; then
+    loggedInUser=$(/usr/bin/python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");')
+    if [ "$loggedInUser" == "_mbsetupuser" ] || [ "$loggedInUser" == "loginwindow" ] || [ "$loggedInUser" == "None" ]; then
+        # invalid user present... bail out
+        exit 1
+    else
+        USER=$loggedInUser "/Applications/Universal Type Client.app/Contents/MacOS/Universal Type Client" --SetupCore YES > /dev/null 2>&amp;1
+    fi
+fi</string>
+                    <key>file_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/universalTypeClient.pkg/Scripts/postinstall</string>
+                </dict>
+                <key>Processor</key>
+                <string>FileCreator</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>filename</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/info.pkg/Scripts/postinstall</string>
+                    <key>mode</key>
+                    <string>a+x</string>
+                </dict>
+                <key>Processor</key>
+                <string>ModeChanger</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>filename</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/universalTypeClient.pkg/Scripts/preinstall</string>
+                    <key>mode</key>
+                    <string>a+x</string>
+                </dict>
+                <key>Processor</key>
+                <string>ModeChanger</string>
+            </dict>            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>filename</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack/universalTypeClient.pkg/Scripts/postinstall</string>
+                    <key>mode</key>
+                    <string>a+x</string>
+                </dict>
+                <key>Processor</key>
+                <string>ModeChanger</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>destination_pkg</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%_%version%.pkg</string>
+                    <key>source_flatpkg_dir</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </dict>
+                <key>Processor</key>
+                <string>FlatPkgPacker</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>additional_pkginfo</key>
+                    <dict>
+                                        <key>installcheck_script</key>
+                <string>#!/usr/bin/python
+"""This installcheck script looks for both the correct version of the UTC application
+as well as that the plugins are installed for any Adobe or Quark version that is installed.
+Originally written by Jesse Peterson, thank you Jesse!"""
+
+import os
+import plistlib
+import sys
+from distutils.version import StrictVersion
+
+UP_TO_DATE = 1
+OUT_OF_DATE = 0
+
+def get_plugin_vers(plugin_path):
+    """Gets plugin versions for Adobe apps"""
+    plugin_pkginfo = "%s/Contents/Info.plist" % (plugin_path)
+    pl = plistlib.readPlist(plugin_pkginfo)
+    return ".".join(pl["CFBundleShortVersionString"].split(".")[:3])
+
+adobe_apps = dict(
+    Illustrator="Plug-ins.localized/Extensions.localized/ExtensisFontManagementAI_VERS_.aip",
+    InCopy="Plug-Ins/Font Activation/ExtensisFontManagementIC_VERS_.InDesignPlugin",
+    InDesign="Plug-Ins/Font Activation/ExtensisFontManagementID_VERS_.InDesignPlugin",
+    Photoshop="Plug-ins/Automate/ExtensisFontManagementPS_VERS_.plugin",
+    AfterEffects="Plug-ins/Extensions/ExtensisFontManagementAE_VERS_.plugin",
+)
+
+# supported versions are taken from matrix on support site
+# https://www.extensis.com/support/universal-type-client-support-guide
+
+adobe_versions = ("CC 2017", "CC 2018", "CC 2019")
+
+quark_versions = ("2016", "2017", "2018")
+
+# note: this substitution is done by AutoPkg. If you are copy-pasting this script somewhere else without
+# setting this value, it will fail!
+pkg_vers = "%version%"
+
+if not os.path.exists("/Applications/Universal Type Client.app"):
+    print "Universal Type Client.app not found, need to install."
+    sys.exit(OUT_OF_DATE)
+
+else:
+    pl = plistlib.readPlist("/Applications/Universal Type Client.app/Contents/Info.plist")
+    installed_vers = pl["CFBundleShortVersionString"]
+    if StrictVersion(installed_vers) &lt; StrictVersion(pkg_vers):
+        print "Found %s, lower version than %s" % (installed_vers, pkg_vers)
+        sys.exit(OUT_OF_DATE)
+
+for name, plugin in adobe_apps.iteritems():
+    for vers in adobe_versions:
+        app_path = "/Applications/Adobe %s %s" % (name, vers)
+        if not os.path.exists(app_path):
+            print "%s not found, skipping" % (app_path)
+            continue
+        if vers == "CC":
+            vers = "CS7"
+        else:
+            vers = "".join(vers.split(" "))
+
+        plugin_path = "%s/%s" % (app_path, plugin)
+        plugin_path = plugin_path.replace("_VERS_", vers)
+
+        if not os.path.exists(plugin_path):
+            print "%s not found, need to install UTC" % (plugin_path)
+            sys.exit(OUT_OF_DATE)
+
+        installed_vers = get_plugin_vers(plugin_path)
+
+        if StrictVersion(installed_vers) &lt; StrictVersion(pkg_vers):
+            print "Found %s, lower version than %s" % (installed_vers, pkg_vers)
+            sys.exit(OUT_OF_DATE)
+
+        print "Found %s with version %s" % (plugin_path, installed_vers)
+
+for vers in quark_versions:
+    app_path = "/Applications/QuarkXPress %s" % (vers)
+    if not os.path.exists(app_path):
+        print "%s not found, skipping" % (app_path)
+        continue
+
+    if vers[0] == '7':
+        vers = '7'
+
+    plugin_path = "%s/XTensions/ExtensisFontManagementQXT_VERS_.xnt" % (app_path)
+    plugin_path = plugin_path.replace("_VERS_", vers)
+    if not os.path.exists(plugin_path):
+        print "%s not found, need to install UTC" % (plugin_path)
+        sys.exit(OUT_OF_DATE)
+
+    installed_vers = get_plugin_vers(plugin_path)
+    if StrictVersion(installed_vers) &lt; StrictVersion(pkg_vers):
+        print "Found %s, lower version than %s" % (installed_vers, pkg_vers)
+        sys.exit(OUT_OF_DATE)
+
+sys.exit(UP_TO_DATE)</string>
+                    </dict>
+                </dict>
+                <key>Processor</key>
+                <string>MunkiPkginfoMerger</string>
+            </dict>
+            <dict>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_path</key>
+                    <string>%RECIPE_CACHE_DIR%/%NAME%_%version%.pkg</string>
+                    <key>repo_subdirectory</key>
+                    <string>%MUNKI_REPO_SUBDIR%</string>
+                </dict>
+                <key>Processor</key>
+                <string>MunkiImporter</string>
+            </dict>
+        </array>
+</dict>
+</plist>
