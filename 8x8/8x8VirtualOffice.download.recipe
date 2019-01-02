@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https:\/\/support.8x8.com\/@api\/deki\/files\/[0-9]*\/VOD_5_[0-9]_[0-9]_[0-9].*.pkg)</string>
+                <string>(?P&lt;url&gt;https:\/\/support.8x8.com\/@api\/deki\/files\/[0-9]*\/VOD_5_[0-9]_[0-9]_[0-9].*.pkg\?revision=[0-9]*)</string>
                 <key>url</key>
                 <string>https://support.8x8.com/us/Cloud_Phone_Service/Voice/Virtual_Office_Desktop/Download_Virtual_Office_Desktop</string>
             </dict>
