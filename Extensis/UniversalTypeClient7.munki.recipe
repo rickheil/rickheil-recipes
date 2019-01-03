@@ -244,99 +244,125 @@ fi</string>
                 <string>#!/usr/bin/python
 """This installcheck script looks for both the correct version of the UTC application
 as well as that the plugins are installed for any Adobe or Quark version that is installed.
-Originally written by Jesse Peterson, thank you Jesse!"""
+Based heavily on the UTC4/5/6 script written by Jesse Peterson.
+
+Jesse's script checked versions against the pkg vers. Some time in either v6 or v7, this
+broke as Extensis stopped bumping plugin vers to match the numbers. This script does
+twofold checks. First, it checks that the main app itself is up to date. If so, it proceeds
+to make sure the plugins are up to date compared to what is in the app itself. If the app
+is up to date, then the versions of the plugins in the bundle must be as well, and we can
+evaluate a "reinstall" to get new plugins installed should something fail or revert there.
+This avoids us having to pre-fill a ton of plugin versions in AutoPkg."""
 
 import os
 import plistlib
 import sys
 from distutils.version import StrictVersion
 
+# globals for convenience and readability because I always forget 0 vs 1 for installchecks
 UP_TO_DATE = 1
 OUT_OF_DATE = 0
 
+"""The below value is substituted by AutoPkg. If you are using this script manually, fill in the
+pkg version below."""
+PKG_VERSION = %version%
+
+def get_app_version():
+	"""Gets the main UTC app version. If you are installing to a non-standard location,
+	you will need to update the app_path variable."""
+	app_info = "/Applications/Universal Type Client.app/Contents/Info.plist"
+	if os.path.isfile(app_info):
+		pl = plistlib.readPlist(app_info)
+		return ".".join(pl["CFBundleShortVersionString"].split(".")[:3])
+	else:
+		# UTC app is not installed
+		sys.exit(OUT_OF_DATE)
+
+
 def get_plugin_vers(plugin_path):
-    """Gets plugin versions for Adobe apps"""
-    plugin_pkginfo = "%s/Contents/Info.plist" % (plugin_path)
-    pl = plistlib.readPlist(plugin_pkginfo)
-    return ".".join(pl["CFBundleShortVersionString"].split(".")[:3])
+	"""Gets plugin version for Adobe apps"""
+	plugin_info = "%s/Contents/Info.plist" % (plugin_path)
+	pl = plistlib.readPlist(plugin_info)
+	return ".".join(pl["CFBundleShortVersionString"].split(".")[:3])
 
-adobe_apps = dict(
-    Illustrator="Plug-ins.localized/Extensions.localized/ExtensisFontManagementAI_VERS_.aip",
-    InCopy="Plug-Ins/Font Activation/ExtensisFontManagementIC_VERS_.InDesignPlugin",
-    InDesign="Plug-Ins/Font Activation/ExtensisFontManagementID_VERS_.InDesignPlugin",
-    Photoshop="Plug-ins/Automate/ExtensisFontManagementPS_VERS_.plugin",
-    AfterEffects="Plug-ins/Extensions/ExtensisFontManagementAE_VERS_.plugin",
-)
 
-# supported versions are taken from matrix on support site
-# https://www.extensis.com/support/universal-type-client-support-guide
+def get_utc_plugins():
+	"""Returns file name and version of available plugins in the UTC app directory"""
+	plugins = {}
+	plugin_extensions = [".aip", ".InDesignPlugin", ".plugin"]
+	pluginfiles_dir = "/Applications/Universal Type Client.app/Contents/Resources/PluginFiles"
+	for item in os.listdir(pluginfiles_dir):
+		if any(extension in item for extension in plugin_extensions):
+			plugininfo_path = os.path.join(pluginfiles_dir, item, "Contents/Info.plist")
+			if os.path.isfile(plugininfo_path):
+				# plugin is valid
+				vers = get_plugin_vers(os.path.join(pluginfiles_dir, item))
+				plugins[item] = vers
+			else:
+				# not a valid plugin
+				continue
+	return plugins
 
-adobe_versions = ("CC 2017", "CC 2018", "CC 2019")
 
-quark_versions = ("2016", "2017", "2018")
+def main():
+	"""Runs checks on both app and plugin versions for determining install state"""
+	if get_app_version() &lt; PKG_VERSION:
+		print "Installed UTC app is older than %s" % PKG_VERSION
+		sys.exit(OUT_OF_DATE)
+	else:
+		print "UTC app is up to date"
+	
+	adobe_apps = dict(
+		Illustrator="Plug-ins.localized/Extensions.localized/",
+		InCopy="Plug-Ins/Font Activation/",
+		InDesign="Plug-Ins/Font Activation/",
+		Photoshop="Plug-ins/Automate/",
+		AfterEffects="Plug-ins/Extensions/",
+		)
+	
+	adobe_versions = ("CC 2017", "CC 2018", "CC 2019")
+	quark_versions = ("2017", "2018")
+	plugins = get_utc_plugins()
+	
+	for name, plugin_folder in adobe_apps.iteritems():
+		for vers in adobe_versions:
+			# first let's build our path to the app and check for it
+			adobe_app_path = "/Applications/Adobe %s %s" % (name, vers)
+			if not os.path.exists(adobe_app_path):
+				print "%s %s not installed, skipping" % (name, vers)
+				continue		
+			
+			installed_plugin_path = "%s/%s" % (adobe_app_path, adobe_apps[name])
+			for installed_plugin in os.listdir(installed_plugin_path):
+				if any(available_plugin in installed_plugin for available_plugin in plugins):
+					installed_vers = get_plugin_vers(os.path.join(installed_plugin_path, installed_plugin))
+					avail_vers = plugins[installed_plugin]
+					if StrictVersion(installed_vers) &lt; StrictVersion(avail_vers):
+						print "%s %s plugin is out of date - need to install UTC" % (name, vers)
+						sys.exit(OUT_OF_DATE)
+					else:
+						print "%s %s plugin is up to date" % (name, vers)
+				else:
+					print "%s %s plugin is missing, need to reinstall UTC" % (name, vers)
 
-# note: this substitution is done by AutoPkg. If you are copy-pasting this script somewhere else without
-# setting this value, it will fail!
-pkg_vers = "%version%"
+	for vers in quark_versions:
+		app_path = "/Applications/QuarkXPress %s" % (vers)
+		if not os.path.exists(app_path):
+			print "%s not found, skipping" % app_path
+			continue
 
-if not os.path.exists("/Applications/Universal Type Client.app"):
-    print "Universal Type Client.app not found, need to install."
-    sys.exit(OUT_OF_DATE)
+		plugin_path = "%s/XTensions/ExtensisFontManagementQXT_VERS_.xnt" % (app_path)
+		plugin_path = plugin_path.replace("_VERS_", vers)
+		if not os.path.exists(plugin_path):
+			print "Plugin missing, need to reinstall UTC"
+			sys.exit(OUT_OF_DATE)
 
-else:
-    pl = plistlib.readPlist("/Applications/Universal Type Client.app/Contents/Info.plist")
-    installed_vers = pl["CFBundleShortVersionString"]
-    if StrictVersion(installed_vers) &lt; StrictVersion(pkg_vers):
-        print "Found %s, lower version than %s" % (installed_vers, pkg_vers)
-        sys.exit(OUT_OF_DATE)
+	# if we've made it this far, the app and all plugins are up to date. Phew!
+	sys.exit(UP_TO_DATE)
 
-for name, plugin in adobe_apps.iteritems():
-    for vers in adobe_versions:
-        app_path = "/Applications/Adobe %s %s" % (name, vers)
-        if not os.path.exists(app_path):
-            print "%s not found, skipping" % (app_path)
-            continue
-        if vers == "CC":
-            vers = "CS7"
-        else:
-            vers = "".join(vers.split(" "))
 
-        plugin_path = "%s/%s" % (app_path, plugin)
-        plugin_path = plugin_path.replace("_VERS_", vers)
-
-        if not os.path.exists(plugin_path):
-            print "%s not found, need to install UTC" % (plugin_path)
-            sys.exit(OUT_OF_DATE)
-
-        installed_vers = get_plugin_vers(plugin_path)
-
-        if StrictVersion(installed_vers) &lt; StrictVersion(pkg_vers):
-            print "Found %s, lower version than %s" % (installed_vers, pkg_vers)
-            sys.exit(OUT_OF_DATE)
-
-        print "Found %s with version %s" % (plugin_path, installed_vers)
-
-for vers in quark_versions:
-    app_path = "/Applications/QuarkXPress %s" % (vers)
-    if not os.path.exists(app_path):
-        print "%s not found, skipping" % (app_path)
-        continue
-
-    if vers[0] == '7':
-        vers = '7'
-
-    plugin_path = "%s/XTensions/ExtensisFontManagementQXT_VERS_.xnt" % (app_path)
-    plugin_path = plugin_path.replace("_VERS_", vers)
-    if not os.path.exists(plugin_path):
-        print "%s not found, need to install UTC" % (plugin_path)
-        sys.exit(OUT_OF_DATE)
-
-    installed_vers = get_plugin_vers(plugin_path)
-    if StrictVersion(installed_vers) &lt; StrictVersion(pkg_vers):
-        print "Found %s, lower version than %s" % (installed_vers, pkg_vers)
-        sys.exit(OUT_OF_DATE)
-
-sys.exit(UP_TO_DATE)</string>
+if __name__ == "__main__":
+    main()</string>
                     </dict>
                 </dict>
                 <key>Processor</key>
