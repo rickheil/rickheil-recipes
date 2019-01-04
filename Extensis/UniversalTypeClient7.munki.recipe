@@ -265,7 +265,7 @@ OUT_OF_DATE = 0
 
 """The below value is substituted by AutoPkg. If you are using this script manually, fill in the
 pkg version below."""
-PKG_VERSION = %version%
+PKG_VERSION = "%version%"
 
 def get_app_version():
 	"""Gets the main UTC app version. If you are installing to a non-standard location,
