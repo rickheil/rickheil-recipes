@@ -45,50 +45,8 @@
 		<dict>
 			<key>Arguments</key>
 			<dict>
-				<key>flat_pkg_path</key>
-				<string>%pathname%</string>
-				<key>destination_path</key>
-				<string>%RECIPE_CACHE_DIR%/unpack</string>
-			</dict>
-			<key>Processor</key>
-			<string>FlatPkgUnpacker</string>
-		</dict>
-        	<dict>
-            		<key>Arguments</key>
-            		<dict>
-                		<key>pkg_payload_path</key>
-                		<string>%RECIPE_CACHE_DIR%/unpack/uc.pkg/Payload</string>
-                		<key>destination_path</key>
-                		<string>%RECIPE_CACHE_DIR%/payload</string>
-            		</dict>
-        		<key>Processor</key>
-            		<string>PkgPayloadUnpacker</string>
-        	</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%RECIPE_CACHE_DIR%/payload/Applications/8x8 - Virtual Office.app/Contents/Info.plist</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>dmg_root</key>
-				<string>%RECIPE_CACHE_DIR%/payload/Applications</string>
-				<key>dmg_path</key>
-				<string>%RECIPE_CACHE_DIR%/8x8VirtualOfficeDesktop_%version%.dmg</string>
-			</dict>
-			<key>Processor</key>
-			<string>DmgCreator</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
 				<key>pkg_path</key>
-				<string>%RECIPE_CACHE_DIR%/8x8VirtualOfficeDesktop_%version%.dmg</string>
+                <string>%pathname%</string>
 				<key>repo_subdirectory</key>
 				<string>%MUNKI_REPO_SUBDIR%</string>
 			</dict>
