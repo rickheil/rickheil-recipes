@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Imports the latest version of Astute Graphics InkScribe to the munki repo</string>
+	<key>Identifier</key>
+	<string>com.github.rickheil.psautopkg.munki.InkScribe</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>InkScribe</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+            <array>
+            	<string>testing</string>
+            </array>
+            <key>description</key>
+            <string>Similar to the native pen tool in its functionality, what makes InkScribe special is the added control it unlocks, allowing you to work with precision and speed.</string>
+            <key>display_name</key>
+            <string>InkScribe</string>
+            <key>developer</key>
+            <string>Astute Graphics</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>blocking_applications</key>
+            <array>
+				<string>Adobe Illustrator 2019</string>
+            </array>
+            <key>minimum_os_version</key>
+            <string>10.10</string>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rickheil.psautopkg.pkg.InkScribe</string>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg/%NAME%_%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
