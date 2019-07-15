@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>description</key>
+        <string>Repackages the Mister Horse Animation Composer AfterEffects plugin installer app into a standard pkg</string>
+        <key>Identifier</key>
+        <string>com.github.rickheil.psautopkg.pkg.AnimationComposer</string>
+        <key>MinimumVersion</key>
+        <string>0.2.5</string>
+        <key>Input</key>
+        <dict>
+			<key>NAME</key>
+			<string>AnimationComposer</string>
+		</dict>
+		<key>ParentRecipe</key>
+		<string>com.github.rickheil.psautopkg.download.AnimationComposer</string>
+		<key>Process</key>
+		<array>
+			<dict>
+				<key>Processor</key>
+				<string>Unarchiver</string>
+			</dict>
+            <dict>
+                <key>Processor</key>
+                <string>PkgRootCreator</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkgroot</key>
+                    <string>%RECIPE_CACHE_DIR%/pkg/AnimationComposer</string>
+                    <key>pkgdirs</key>
+                    <dict>
+                        <key>Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/MisterHorse/AnimationComposer</key>
+                        <string>0755</string>
+                    </dict>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>Unarchiver</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>archive_path</key>
+                    <string>%RECIPE_CACHE_DIR%/AnimationComposer/AnimationComposerInstaller_2.9.4.app/Contents/Resources/plugin_core.zip</string>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/pkg/AnimationComposer/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/MisterHorse/AnimationComposer</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>Unarchiver</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>archive_path</key>
+                    <string>%RECIPE_CACHE_DIR%/AnimationComposer/AnimationComposerInstaller_2.9.4.app/Contents/Resources/plugin_resources.zip</string>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/pkg/AnimationComposer/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/MisterHorse/AnimationComposer</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>PlistReader</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>info_path</key>
+                    <string>%RECIPE_CACHE_DIR%/pkg/AnimationComposer/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/MisterHorse/AnimationComposer/AnimationComposer.plugin/Contents/Info.plist</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>PkgCreator</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>pkg_request</key>
+                    <dict>
+                        <key>chown</key>
+                        <array/>
+                        <key>id</key>
+                        <string>%version%</string>
+                        <key>pkgdir</key>
+                        <string>%RECIPE_CACHE_DIR%/pkg</string>
+                        <key>pkgname</key>
+                        <string>%NAME%_%version%</string>
+                        <key>pkgroot</key>
+                        <string>%RECIPE_CACHE_DIR%/pkg/AnimationComposer</string>
+                        <key>pkgtype</key>
+                        <string>flat</string>
+                        <key>version</key>
+                        <string>%version%</string>
+                    </dict>
+            	</dict>
+        	</dict>
+		</array>
+</dict>
+</plist>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Imports the latest version of Mister Horse Animation Composer to the munki repo</string>
+	<key>Identifier</key>
+	<string>com.github.rickheil.psautopkg.munki.AnimationComposer</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>AnimationComposer</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+            <array>
+            	<string>testing</string>
+            </array>
+            <key>description</key>
+			<string>Animation Composer is an incredibly handy plug-in for Adobe After Effects that will save you tons of time.  It’s loaded with motion presets, precomps, and sounds that you can use in your motion graphics projects.</string>
+            <key>display_name</key>
+            <string>Animation Composer</string>
+            <key>developer</key>
+            <string>Mister Horse</string>
+            <key>name</key>
+            <string>%NAME%</string>
+            <key>unattended_install</key>
+            <true/>
+            <key>blocking_applications</key>
+            <array>
+            	<string>Adobe AfterEffects</string>
+				<string>Adobe Premiere Pro</string>
+            </array>
+            <key>minimum_os_version</key>
+            <string>10.10</string>
+        </dict>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rickheil.psautopkg.pkg.AnimationComposer</string>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%RECIPE_CACHE_DIR%/pkg/%NAME%_%version%.pkg</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
