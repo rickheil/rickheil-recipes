@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Description</key>
+    <string>Repackages the Astute Graphics Ink Scribe plugin for Illustrator</string>
+    <key>Identifier</key>
+    <string>com.github.rickheil.psautopkg.pkg.InkScribe</string>
+    <key>MinimumVersion</key>
+    <string>0.5.0</string>
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>InkScribe</string>
+    </dict>
+    <key>ParentRecipe</key>
+    <string>com.github.rickheil.psautopkg.download.DrawBundle</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>PkgRootCreator</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkgroot</key>
+                <string>%RECIPE_CACHE_DIR%/pkg/InkScribe</string>
+                <key>pkgdirs</key>
+                <dict>
+                    <key>Applications/Adobe Illustrator CC 2019/Plug-ins.localized/</key>
+                    <string>0755</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%pathname%/Astute Graphics Unified Installer.app/Contents/Resources/InkScribe.zip</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/InkScribe.zip</string>
+                <key>overwrite</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Unarchiver</string>
+            <key>Arguments</key>
+            <dict>
+                <key>archive_path</key>
+                <string>%RECIPE_CACHE_DIR%/downloads/InkScribe.zip</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/MacCC2300/InkScribe.aip</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/Adobe Illustrator CC 2019/Plug-ins.localized/InkScribe.aip</string>
+                <key>overwrite</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>Copier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>source_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Common/InkScribe.aip/Contents/MacOS/kstor</string>
+                <key>destination_path</key>
+                <string>%pkgroot%/Applications/Adobe Illustrator CC 2019/Plug-ins.localized/InkScribe.aip/Contents/MacOS/kstor</string>
+                <key>overwrite</key>
+                <true/>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%pkgroot%/Applications/Adobe Illustrator CC 2019/Plug-ins.localized/InkScribe.aip/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgCreator</string>
+            <key>Arguments</key>
+                <dict>
+                    <key>pkg_request</key>
+                    <dict>
+                        <key>chown</key>
+                        <array/>
+                        <key>id</key>
+                        <string>%version%</string>
+                        <key>pkgdir</key>
+                        <string>%RECIPE_CACHE_DIR%/pkg</string>
+                        <key>pkgname</key>
+                        <string>%NAME%_%version%</string>
+                        <key>pkgroot</key>
+                        <string>%pkgroot%</string>
+                        <key>pkgtype</key>
+                        <string>flat</string>
+                        <key>version</key>
+                        <string>%version%</string>
+                    </dict>
+                </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
