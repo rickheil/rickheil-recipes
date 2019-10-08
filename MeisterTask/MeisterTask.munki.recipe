@@ -31,7 +31,7 @@
         </dict>
     </dict>
     <key>ParentRecipe</key>
-    <string>com.github.rtrouton.pkg.MeisterTask</string>
+    <string>com.github.rtrouton.download.MeisterTask</string>
     <key>MinimumVersion</key>
     <string>0.2.9</string>
     <key>Process</key>
