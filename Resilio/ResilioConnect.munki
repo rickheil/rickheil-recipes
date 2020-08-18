@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Imports the latest version of Resilio Connect into munki</string>
+	<key>Identifier</key>
+	<string>com.github.rickheil.psautopkg.munki.ResilioConnect</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>Resilio Connect Agent</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+        <string>apps/Resilio/Resilio Connect Agent</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>production</string>
+			</array>
+            <key>description</key>
+            <string>Resilio Connect leads the file synchronization software industry with the fastest real time file transfers available. Deploy system updates and transfer big data files to remote offices, emergency vehicles, vessels, or planes faster than anything you have seen before. Resilio Connect operates over your existing infrastructure and uses P2P file sharing protocols and WAN acceleration to overcome network limitations affecting enterprise file transfer.</string>
+			<key>display_name</key>
+			<string>Resilio Connect Agent</string>
+			<key>developer</key>
+            <string>Resilio</string>
+            <key>category</key>
+            <string>Productivity</string>
+			<key>name</key>
+			<string>%NAME%</string>
+		 	<key>unattended_install</key>
+			<true/>
+			<key>minimum_os_version</key>
+            <string>10.10</string>
+            <key>preinstall_script</key>
+            <string>#!/bin/bash
+ps aux  |  grep -i '/Applications/Resilio Connect Agent.app/Contents/MacOS/Resilio Connect Agent'  |  awk '{print $2}'  |  xargs sudo kill -9
+                rm -rf /Applications/Resilio\ Connect\ Agent.app</string>
+            <key>postinstall_script</key>
+            <string>#!/bin/bash
+open -a /Applications/Resilio\ Connect\ Agent.app</string>
+		    </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>1.4.1</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+                <string>%PKG%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+		</dict>
+	</array>
+</dict>
+</plist>
