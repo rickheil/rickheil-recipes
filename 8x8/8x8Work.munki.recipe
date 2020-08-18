@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Imports the latest version of 8x8 Virtual Office Desktop into munki</string>
+	<string>Imports the latest version of 8x8 Work into munki</string>
 	<key>Identifier</key>
-	<string>com.github.rickheil.psautopkg.munki.8x8VirtualOffice</string>
+	<string>com.github.rickheil.psautopkg.munki.8x8Work</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>8x8VirtualOfficeDesktop</string>
+		<string>8x8Work</string>
 		<key>MUNKI_REPO_SUBDIR</key>
 		<string>apps</string>
 		<key>pkginfo</key>
@@ -19,9 +19,9 @@
 				<string>testing</string>
 			</array>
 			<key>description</key>
-			<string>Virtual Office Desktop is a comprehensive unified communications application that integrates a business softphone with visual voicemail, corporate directory, instant messaging, presence, video calling, fax, call recording, web conferencing, and social media.</string>
+			<string>Work is a comprehensive unified communications application that integrates a business softphone with visual voicemail, corporate directory, instant messaging, presence, video calling, fax, call recording, web conferencing, and social media.</string>
 			<key>display_name</key>
-			<string>8x8 Virtual Office</string>
+			<string>8x8 Work</string>
 			<key>developer</key>
 			<string>8x8</string>
 			<key>name</key>
@@ -30,14 +30,14 @@
 			<true/>
 			<key>blocking_applications</key>
 			<array>
-				<string>8x8 - Virtual Office</string>
+				<string>8x8 Work</string>
 			</array>
 			<key>minimum_os_version</key>
 			<string>10.10</string>
 		</dict>
     </dict>
     <key>ParentRecipe</key>
-    <string>com.github.rickheil.psautopkg.download.8x8VirtualOffice</string>
+    <string>com.github.rickheil.psautopkg.download.8x8Work</string>
     <key>MinimumVersion</key>
     <string>0.5.0</string>
 	<key>Process</key>
