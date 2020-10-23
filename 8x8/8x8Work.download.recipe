@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>re_pattern</key>
-                <string>(?P&lt;url&gt;https://support.8x8.com/@api/deki/files/2497/work_(?:[0-9].?){1,4}\.dmg)</string>
+                <string>(?P&lt;url&gt;https://vod-updates.8x8.com/ga/work-dmg-v(?:[0-9].?){1,4}\.dmg)</string>
                 <key>url</key>
                 <string>https://support.8x8.com/cloud-phone-service/voice/work-desktop/download-8x8-work-for-desktop</string>
             </dict>
