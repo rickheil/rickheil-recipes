@@ -1,2 +1,3 @@
-# psautopkg
-P+s autopkg recipes
+# rickheil-recipes
+
+AutoPkg recipes
