@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Unzips Zscaler package and puts into a DMG for importing into Munki</string>
+        <key>Identifier</key>
+        <string>com.github.rickheil-recipes.pkg.Zscaler</string>
+        <key>ParentRecipe</key>
+        <string>com.github.rickheil-recipes.download.Zscaler</string>
+        <key>Input</key>
+        <dict>
+        </dict>
+        <key>MiniumumVersion</key>
+        <string>2.4.1</string>
+        <key>Process</key>
+        <array>
+            <dict>
+                <key>Processor</key>
+                <string>Unarchiver</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>destination_path</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>Processor</key>
+                <string>DmgCreator</string>
+                <key>Arguments</key>
+                <dict>
+                    <key>dmg_root</key>
+                    <string>%RECIPE_CACHE_DIR%/unpack</string>
+                    <key>dmg_path</key>
+                    <string>%RECIPE_CACHE_DIR%/Zscaler_osx.dmg</string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
