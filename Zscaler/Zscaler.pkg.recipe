@@ -20,6 +20,8 @@
                 <string>Unarchiver</string>
                 <key>Arguments</key>
                 <dict>
+                    <key>purge_destination</key>
+                    <true/>
                     <key>destination_path</key>
                     <string>%RECIPE_CACHE_DIR%/unpack</string>
                 </dict>
