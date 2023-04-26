@@ -45,14 +45,6 @@
                 </string>
                 <key>unattended_install</key>
                 <false/>
-                <key>postinstall_script</key>
-                <string>#!/bin/bash
-/tmp/%app-name%/Contents/MacOS/installbuilder.sh \
-  --strictEnforcement '%STRICT_ENFORCEMENT%' \
-  --policyToken '%POLICY_TOKEN%' \
-  --cloudName '%CLOUD_NAME%' \
-  --mode '%MODE%' \
-  --unattendedmodeui '%UNATT_MODE_UI%'</string>
             </dict>
         </dict>
         <key>MinimumVersion</key>
@@ -88,6 +80,14 @@
                 <dict>
                     <key>additional_pkginfo</key>
                     <dict>
+                    	<key>postinstall_script</key>
+                		<string>#!/bin/bash
+/tmp/Zscaler-osx-%version%-installer.app/Contents/MacOS/installbuilder.sh \
+  --strictEnforcement '%STRICT_ENFORCEMENT%' \
+  --policyToken '%POLICY_TOKEN%' \
+  --cloudName '%CLOUD_NAME%' \
+  --mode '%MODE%' \
+  --unattendedmodeui '%UNATT_MODE_UI%'</string>
                         <key>installs</key>
                             <array>
                                 <dict>
