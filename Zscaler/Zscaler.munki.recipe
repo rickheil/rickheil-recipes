@@ -36,6 +36,8 @@
                 <string>Zscaler</string>
                 <key>display_name</key>
                 <string>%NAME%</string>
+                <key>blocking_applications</key>
+                <array/>
                 <key>uninstall_method</key>
                 <string>uninstall_script</string>
                 <key>uninstall_script</key>

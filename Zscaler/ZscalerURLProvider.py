@@ -28,7 +28,7 @@ __all__ = ["ZscalerURLProvider"]
 # This provider scrapes versions for download from the release notes
 # published on the Zscaler help CMS.
 # pylint: disable=C0301
-NOTES_DATA_URL = "https://help.zscaler.com/zapi/fetch-data?url_alias=/client-connector/client-connector-app-release-summary-2023&view_type=full&cloud=www.google.com&domain=zscaler&applicable_category=2896&applicable_version=all&applicable_parent_version=&keyword=undefined&language=en&_format=json"
+NOTES_DATA_URL = "https://help.zscaler.com/zapi/fetch-data?url_alias=/client-connector/client-connector-app-release-summary-2024&view_type=full&cloud=www.google.com&domain=zscaler&applicable_category=2896&applicable_version=all&applicable_parent_version=&keyword=undefined&language=en&_format=json"
 # pylint: enable=C0301
 
 INCLUDE_LIMITED = False
