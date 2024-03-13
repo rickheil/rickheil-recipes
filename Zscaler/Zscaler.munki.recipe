@@ -36,8 +36,6 @@
                 <string>Zscaler</string>
                 <key>display_name</key>
                 <string>%NAME%</string>
-                <key>blocking_applications</key>
-                <array/>
                 <key>uninstall_method</key>
                 <string>uninstall_script</string>
                 <key>uninstall_script</key>
@@ -82,6 +80,8 @@
                 <dict>
                     <key>additional_pkginfo</key>
                     <dict>
+                        <key>blocking_applications</key>
+                        <array/>
                     	<key>postinstall_script</key>
                 		<string>#!/bin/bash
 /tmp/Zscaler-osx-%version%-installer.app/Contents/MacOS/installbuilder.sh \
