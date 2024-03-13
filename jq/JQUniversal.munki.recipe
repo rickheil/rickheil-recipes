@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Description</key>
+        <string>Downloads the latest universal version of jq and imports it into Munki.</string>
+        <key>Identifier</key>
+        <string>com.github.rickheil-recipes.munki.JQUniversal</string>
+        <key>Input</key>
+        <dict>
+            <key>NAME</key>
+            <string>jq</string>
+            <key>MUNKI_REPO_SUBDIR</key>
+            <string>apps/jqlang/jq</string>
+            <key>pkginfo</key>
+            <dict>
+                <key>catalogs</key>
+                <array>
+                    <string>testing</string>
+                </array>
+                <key>description</key>
+                <string>jq is a lightweight and flexible command-line JSON processor.</string>
+                <key>developer</key>
+                <string>jqlang</string>
+                <key>display_name</key>
+                <string>%NAME%</string>
+                <key>uninstall_method</key>
+                <string>removepackages</string>
+                <key>unattended_install</key>
+                <true/>
+            </dict>
+    </dict>
+    <key>MinimumVersion</key>
+    <string>0.2.0</string>
+    <key>ParentRecipe</key>
+    <string>com.github.rtrouton.pkg.JQUniversal</string>
+    <key>Process</key>
+    <array>
+        <dict>
+            <key>Processor</key>
+            <string>FileFinder</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pattern</key>
+                <string>%RECIPE_CACHE_DIR%/jqlang-jq-Universal*</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>MunkiImporter</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_path</key>
+                <string>%found_filename%</string>
+                <key>repo_subdirectory</key>
+                <string>%MUNKI_REPO_SUBDIR%</string>
+            </dict>
+        </dict>
+    </array>
+    </dict>
+</plist>
