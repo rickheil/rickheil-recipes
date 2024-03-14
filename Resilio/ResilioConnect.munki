@@ -33,11 +33,11 @@
 			<key>minimum_os_version</key>
             <string>10.10</string>
             <key>preinstall_script</key>
-            <string>#!/bin/bash
+            <string>#!/bin/bash -p
 ps aux  |  grep -i '/Applications/Resilio Connect Agent.app/Contents/MacOS/Resilio Connect Agent'  |  awk '{print $2}'  |  xargs sudo kill -9
                 rm -rf /Applications/Resilio\ Connect\ Agent.app</string>
             <key>postinstall_script</key>
-            <string>#!/bin/bash
+            <string>#!/bin/bash -p
 open -a /Applications/Resilio\ Connect\ Agent.app</string>
 		    </dict>
     </dict>

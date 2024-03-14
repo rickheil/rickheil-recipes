@@ -39,7 +39,7 @@
                 <key>uninstall_method</key>
                 <string>uninstall_script</string>
                 <key>uninstall_script</key>
-                <string>!/bin/bash
+                <string>!/bin/bash -p
 /Applications/Zscaler/.Uninstaller.sh
 /usr/sbin/pkgutil --forget=com.zscaler.zscaler.pkg
                 </string>
@@ -83,7 +83,7 @@
                         <key>blocking_applications</key>
                         <array/>
                     	<key>postinstall_script</key>
-                		<string>#!/bin/bash
+                		<string>#!/bin/bash -p
 /tmp/Zscaler-osx-%version%-installer.app/Contents/MacOS/installbuilder.sh \
   --strictEnforcement '%STRICT_ENFORCEMENT%' \
   --policyToken '%POLICY_TOKEN%' \

@@ -124,7 +124,7 @@ Store all of your fonts in a centralized, server-based font manager to ensure co
                 <key>Arguments</key>
                 <dict>
                     <key>file_content</key>
-                    <string>#!/bin/bash
+                    <string>#!/bin/bash -p
 set -x
 
 # install the UTC plugins
@@ -139,7 +139,7 @@ set -x
                 <key>Arguments</key>
                 <dict>
                     <key>file_content</key>
-                    <string>#!/bin/bash
+                    <string>#!/bin/bash -p
 set -x 
 
 # shut down FMCore if running
@@ -163,7 +163,7 @@ fi</string>
                 <key>Arguments</key>
                 <dict>
                     <key>file_content</key>
-                    <string>#!/bin/bash
+                    <string>#!/bin/bash -p
 set -x 
 
 # create Extensis and UTC directories if they don't already exist
