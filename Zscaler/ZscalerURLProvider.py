@@ -86,7 +86,7 @@ class ZscalerURLProvider(URLGetter):
                 if len(extracted) > 0 and include_limited:
                     self.output(f"Found limited release {extracted} - adding to list.", 3)
                     versions.append(extracted)
-            else:
+            if "available" in entry_data["release"]:
                 extracted = re.search(r"Client\ Connector\ ([\d\.]*)\ for macOS",
                                       entry_data["release"]["available"][0]["title"]).group(1)
                 if len(extracted) > 0:
