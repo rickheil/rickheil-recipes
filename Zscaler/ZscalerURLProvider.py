@@ -21,6 +21,7 @@ import re
 from distutils.version import LooseVersion
 import sys
 sys.path.insert(0, "/Library/AutoPkg")
+from autopkglib import ProcessorError
 from autopkglib.URLGetter import URLGetter
 
 __all__ = ["ZscalerURLProvider"]
@@ -123,6 +124,11 @@ class ZscalerURLProvider(URLGetter):
             self.output(f"Processing found version {version}")
             if newest_version is None or LooseVersion(version) > LooseVersion(newest_version):
                 newest_version = version
+        if newest_version is None:
+            raise ProcessorError(
+                f"No Zscaler versions found"
+                f"{' matching prefix ' + repr(version_prefix) if version_prefix else ''}."
+            )
         self.output(f"Found newest version of Zscaler Client Connector as {newest_version}.")
         return newest_version
 
