@@ -10,6 +10,10 @@
         <dict>
             <key>INCLUDE_LIMITED</key>
             <string></string>
+            <key>DOWNLOAD_TYPE</key>
+            <string>app</string>
+            <key>VERSION_PREFIX</key>
+            <string></string>
             <key>MUNKI_REPO_SUBDIR</key>
             <string>apps</string>
             <key>NAME</key>
