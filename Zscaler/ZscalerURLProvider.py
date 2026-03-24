@@ -140,9 +140,9 @@ class ZscalerURLProvider(URLGetter):
         notes_data_url = self.env.get("notes_data_url", NOTES_DATA_URL)
         if notes_data_url != NOTES_DATA_URL:
             self.output(f"NOTES_DATA_URL overridden to {notes_data_url}", 3)
-        download_type = self.env.get("download_type", DOWNLOAD_TYPE).lower()
+        download_type = self.env.get("download_type", DOWNLOAD_TYPE).lower() or DOWNLOAD_TYPE
         if download_type not in ("app", "pkg"):
-            raise ValueError(f"Invalid download_type '{download_type}'. Must be 'app' or 'pkg'.")
+            raise ProcessorError(f"Invalid download_type '{download_type}'. Must be 'app' or 'pkg'.")
         if download_type != DOWNLOAD_TYPE:
             self.output(f"DOWNLOAD_TYPE overridden to {download_type}", 3)
         version_prefix = self.env.get("version_prefix", VERSION_PREFIX)
