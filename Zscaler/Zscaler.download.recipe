@@ -3,13 +3,19 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest Zscaler. Set INCLUDE_LIMITED to True to include limited availability releases.</string>
+        <string>Downloads the latest Zscaler. Set INCLUDE_LIMITED to True to include limited availability releases. Set DOWNLOAD_TYPE to 'pkg' for a .pkg installer (default is 'app'). Set VERSION_PREFIX to e.g. '4.5' to pin to an LTS branch.</string>
         <key>Identifier</key>
         <string>com.github.rickheil-recipes.download.Zscaler</string>
         <key>Input</key>
         <dict>
             <key>NAME</key>
             <string>Zscaler</string>
+            <key>INCLUDE_LIMITED</key>
+            <string></string>
+            <key>DOWNLOAD_TYPE</key>
+            <string>app</string>
+            <key>VERSION_PREFIX</key>
+            <string></string>
         </dict>
         <key>MinimumVersion</key>
         <string>1.4</string>
@@ -22,6 +28,10 @@
                 <dict>
                     <key>include_limited</key>
                     <string>%INCLUDE_LIMITED%</string>
+                    <key>download_type</key>
+                    <string>%DOWNLOAD_TYPE%</string>
+                    <key>version_prefix</key>
+                    <string>%VERSION_PREFIX%</string>
                 </dict>
             </dict>
             <dict>

@@ -33,6 +33,8 @@ NOTES_DATA_URL = "https://help.zscaler.com/zapi/fetch-data?url_alias=/client-con
 
 INCLUDE_LIMITED = False
 CLOUDFRONT_DISTRO = "https://d32a6ru7mhaq0c.cloudfront.net"
+DOWNLOAD_TYPE = "app"
+VERSION_PREFIX = ""
 
 class ZscalerURLProvider(URLGetter):
     """Provides URL to the latest Zscaler client release."""
@@ -55,7 +57,20 @@ class ZscalerURLProvider(URLGetter):
             "required": False,
             "description": (
                 f"URL for Zscaler Cloudfront distribution point. Defaults to '{CLOUDFRONT_DISTRO}'."
-
+            ),
+        },
+        "download_type": {
+            "required": False,
+            "description": (
+                "Type of download: 'app' for .app.zip or 'pkg' for .pkg. "
+                f"Defaults to '{DOWNLOAD_TYPE}'."
+            ),
+        },
+        "version_prefix": {
+            "required": False,
+            "description": (
+                "Only consider versions starting with this prefix, e.g. '4.5' "
+                "to select the LTS branch. Defaults to '' (no filtering)."
             ),
         },
     }
@@ -71,9 +86,9 @@ class ZscalerURLProvider(URLGetter):
         },
     }
 
-    def get_zscaler_version(self, notes_data_url, include_limited):
+    def get_zscaler_version(self, notes_data_url, include_limited, version_prefix):
         """Returns the latest version number by scraping release notes."""
-        self.output(f"Using default notes_data_url of {notes_data_url}", 3)
+        self.output(f"Using notes_data_url of {notes_data_url}", 3)
         json_response = self.download(notes_data_url)
         zscaler_info = json.loads(json_response)
         self.output(zscaler_info, 4)
@@ -93,6 +108,15 @@ class ZscalerURLProvider(URLGetter):
                     self.output(f"Found GA release {extracted} - adding to list.", 3)
                     versions.append(extracted)
 
+        # filter by version prefix if specified
+        if version_prefix:
+            filtered = [v for v in versions if v.startswith(version_prefix)]
+            self.output(
+                f"Filtering versions by prefix '{version_prefix}': "
+                f"{len(filtered)} of {len(versions)} matched.", 2
+            )
+            versions = filtered
+
         # compare all extracted versions to find highest
         newest_version = None
         for version in versions:
@@ -110,13 +134,26 @@ class ZscalerURLProvider(URLGetter):
         notes_data_url = self.env.get("notes_data_url", NOTES_DATA_URL)
         if notes_data_url != NOTES_DATA_URL:
             self.output(f"NOTES_DATA_URL overridden to {notes_data_url}", 3)
+        download_type = self.env.get("download_type", DOWNLOAD_TYPE).lower()
+        if download_type not in ("app", "pkg"):
+            raise ValueError(f"Invalid download_type '{download_type}'. Must be 'app' or 'pkg'.")
+        if download_type != DOWNLOAD_TYPE:
+            self.output(f"DOWNLOAD_TYPE overridden to {download_type}", 3)
+        version_prefix = self.env.get("version_prefix", VERSION_PREFIX)
+        if version_prefix:
+            self.output(f"VERSION_PREFIX set to '{version_prefix}'", 3)
+        cloudfront_distro = self.env.get("cloudfront_distro_url", CLOUDFRONT_DISTRO)
 
         # get latest version number
-        version = self.get_zscaler_version(notes_data_url, include_limited)
+        version = self.get_zscaler_version(notes_data_url, include_limited, version_prefix)
 
-        # assemble output
-        self.env["url"] = f"{CLOUDFRONT_DISTRO}/Zscaler-osx-{version}-installer.app.zip"
-        self.env["filename"] = f"Zscaler-osx-{version}-installer.app.zip"
+        # assemble output based on download type
+        if download_type == "pkg":
+            self.env["url"] = f"{cloudfront_distro}/Zscaler-osx-{version}-installer.pkg"
+            self.env["filename"] = f"Zscaler-osx-{version}-installer.pkg"
+        else:
+            self.env["url"] = f"{cloudfront_distro}/Zscaler-osx-{version}-installer.app.zip"
+            self.env["filename"] = f"Zscaler-osx-{version}-installer.app.zip"
         self.env["version"] = version
 
 
