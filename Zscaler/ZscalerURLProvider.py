@@ -97,17 +97,19 @@ class ZscalerURLProvider(URLGetter):
         for entry in zscaler_info["data"]["body"]["release_notes"]["entries"]:
             entry_data = zscaler_info["data"]["body"]["release_notes"]["entries"][entry]
             if "limited" in entry_data["release"]:
-                extracted = re.search(r"Client\ Connector\ ([\d\.]*)\ for macOS",
-                                      entry_data["release"]["limited"][0]["title"]).group(1)
-                if len(extracted) > 0 and include_limited:
-                    self.output(f"Found limited release {extracted} - adding to list.", 3)
-                    versions.append(extracted)
+                for item in entry_data["release"]["limited"]:
+                    match = re.search(r"Client\ Connector\ ([\d\.]*)\ for macOS",
+                                      item["title"])
+                    if match and match.group(1) and include_limited:
+                        self.output(f"Found limited release {match.group(1)} - adding to list.", 3)
+                        versions.append(match.group(1))
             if "available" in entry_data["release"]:
-                extracted = re.search(r"Client\ Connector\ ([\d\.]*)\ for macOS",
-                                      entry_data["release"]["available"][0]["title"]).group(1)
-                if len(extracted) > 0:
-                    self.output(f"Found GA release {extracted} - adding to list.", 3)
-                    versions.append(extracted)
+                for item in entry_data["release"]["available"]:
+                    match = re.search(r"Client\ Connector\ ([\d\.]*)\ for macOS",
+                                      item["title"])
+                    if match and match.group(1):
+                        self.output(f"Found GA release {match.group(1)} - adding to list.", 3)
+                        versions.append(match.group(1))
 
         # filter by version prefix if specified
         if version_prefix:
