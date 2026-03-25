@@ -70,7 +70,7 @@ class ZscalerURLProvider(URLGetter):
         "version_prefix": {
             "required": False,
             "description": (
-                "Only consider versions starting with this prefix, e.g. '4.5' "
+                "Only consider versions starting with this prefix, e.g. '4.5.2' "
                 "to select the LTS branch. Defaults to '' (no filtering)."
             ),
         },

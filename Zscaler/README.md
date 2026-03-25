@@ -18,7 +18,7 @@ This recipe is forked from an initial idea by @williamtheaker on Github to use t
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `DOWNLOAD_TYPE` | `app` | `app` for .app.zip, `pkg` for .pkg installer |
-| `VERSION_PREFIX` | *(empty)* | Filter versions by prefix, e.g. `4.5` to pin to an LTS branch |
+| `VERSION_PREFIX` | *(empty)* | Filter versions by prefix, e.g. `4.5.2` to pin to an LTS branch |
 | `INCLUDE_LIMITED` | *(empty)* | Set to `True` to include limited availability (beta) releases |
 
 ### Munki options (Zscaler.munki.recipe only)
@@ -45,7 +45,7 @@ autopkg run com.github.rickheil-recipes.munki.Zscaler
 autopkg run com.github.rickheil-recipes.munki.ZscalerPkg
 ```
 
-### Pin to LTS branch (e.g. 4.5)
+### Pin to LTS branch (e.g. 4.5.2)
 
 In your recipe override, set:
 
@@ -53,7 +53,7 @@ In your recipe override, set:
 <key>Input</key>
 <dict>
     <key>VERSION_PREFIX</key>
-    <string>4.5</string>
+    <string>4.5.2</string>
 </dict>
 ```
 

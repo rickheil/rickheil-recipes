@@ -3,7 +3,7 @@
 <plist version="1.0">
     <dict>
         <key>Description</key>
-        <string>Downloads the latest Zscaler .pkg installer and imports it into Munki. Set VERSION_PREFIX to e.g. '4.5' to pin to an LTS branch.</string>
+        <string>Downloads the latest Zscaler .pkg installer and imports it into Munki. Set VERSION_PREFIX to e.g. '4.5.2' to pin to an LTS branch.</string>
         <key>Identifier</key>
         <string>com.github.rickheil-recipes.munki.ZscalerPkg</string>
         <key>Input</key>
